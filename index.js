@@ -31,6 +31,14 @@ app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
 
+app.get('/info', (request, response) => {
+    let personsCuantity = persons.length
+    let requestTime = new Date(Date.now())
+
+    response.send(
+            `<p>The phonebook has stored the info of ${personsCuantity} persons</p><p>${requestTime}</p>`
+    )
+})
 
 
 
