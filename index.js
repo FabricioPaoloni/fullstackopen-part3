@@ -56,6 +56,21 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
 })
 
+const getRandomID = () => {
+    return Math.floor(Math.random() * 10000); //numbers floored, max value is 10000
+  }
+
+app.post('/api/persons', (request, response) => {
+    let newPerson = {
+        id: String(getRandomID()),
+        name: request.body.name,
+        number: request.body.number
+    }
+    persons = persons.concat(newPerson)
+    response.json(newPerson)
+
+})
+
 
 const PORT = 3001
 app.listen(PORT, () => {
