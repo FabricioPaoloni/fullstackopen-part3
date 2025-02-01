@@ -41,6 +41,14 @@ app.get('/info', (request, response) => {
 })
 
 
+app.get('/api/persons/:id', (request, response) => {
+    let id = request.params.id
+    let person = persons.find(p => p.id === id)
+    person ?
+    response.json(person) :
+    response.status(404).send('Id not found in the database')
+})
+
 
 const PORT = 3001
 app.listen(PORT, () => {
