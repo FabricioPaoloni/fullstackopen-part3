@@ -5,3 +5,34 @@ Content-Type: application/json
     "name": "new person being added",
     "number": 6354874564
 }
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "",
+    "number": 6354874564
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "new person being added",
+    "number": ""
+}
+
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Arto Hellas",
+    "number": 6354874564
+}

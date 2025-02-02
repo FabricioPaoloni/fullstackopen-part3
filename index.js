@@ -61,6 +61,19 @@ const getRandomID = () => {
   }
 
 app.post('/api/persons', (request, response) => {
+
+    if(!request.body.name){
+        return response.status(400).json({error: 'Name is required'})
+    }
+    if(!request.body.number){
+        return response.status(400).json({error: 'Number is required'})
+    }
+    let validation = persons.find(person => person.name === request.body.name)
+    if(validation){
+        return response.status(400).json({error: 'Name already added in the phonebook'})
+    }
+
+
     let newPerson = {
         id: String(getRandomID()),
         name: request.body.name,
