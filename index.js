@@ -10,10 +10,10 @@ morgan.token('request-body', (req, res) => {
     return JSON.stringify(req.body)
 })
 
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(cors())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms --- :request-body'))
-app.use(express.static('dist'))
 
 // let persons = [
 //     {
@@ -81,10 +81,11 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    let id = request.params.id
-    persons = persons.filter(p => p.id !== id)
-
-    response.status(204).end()
+   Person.findByIdAndDelete(request.params.id)
+        .then(result => {
+            response.status(204).end()
+        })
+        .catch(error => response.status(400).send(`Error ocurred whil deleting: ${error.message}`))
 })
 
 // const getRandomID = () => {

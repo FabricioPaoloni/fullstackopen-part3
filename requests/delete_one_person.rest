@@ -1,2 +1,7 @@
 
+//bad request, worng type of id:
 DELETE http://localhost:3001/api/persons/1
+
+###
+//testing delete: change the ID for one that exists in the DB
+DELETE http://localhost:3001/api/persons/67b140f30e7268dfe0d3a28a
