@@ -93,25 +93,29 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
 
-    if(!request.body.name){
-        return response.status(400).json({error: 'Name is required'})
+    if (!request.body.name) {
+        return response.status(400).json({ error: 'Name is required' })
     }
-    if(!request.body.number){
-        return response.status(400).json({error: 'Number is required'})
+    if (!request.body.number) {
+        return response.status(400).json({ error: 'Number is required' })
     }
-    let validation = persons.find(person => person.name === request.body.name)
-    if(validation){
-        return response.status(400).json({error: 'Name already added in the phonebook'})
-    }
+    let persons
+    Person.find({})
+        .then(personsArray => {
+            let validation = personsArray.find(person => person.name === request.body.name)
+            if (validation) {
+                return response.status(400).json({ error: 'Name already added in the phonebook' })
+            }
 
-
-    let newPerson = {
-        id: String(getRandomID()),
-        name: request.body.name,
-        number: request.body.number
-    }
-    persons = persons.concat(newPerson)
-    response.json(newPerson)
+            let newPerson = new Person({
+                name: request.body.name,
+                number: request.body.number
+            })
+            
+            newPerson.save()
+                .then(person => response.json(person))
+        })
+        .catch(error => response.status(400).json({ error: "An error ocurred while posting a new Person", message: error.message }))
 
 })
 
