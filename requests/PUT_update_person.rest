@@ -1,0 +1,9 @@
+
+//change the /persons/:id to an id that exists in the DB.
+PUT http://localhost:3001/api/persons/67b27f30358c76f740c12a52
+Content-Type: application/json
+
+{
+    "name": "Arto Hellas",
+    "number": "1222333"
+}
