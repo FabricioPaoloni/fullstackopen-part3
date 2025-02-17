@@ -90,12 +90,12 @@ app.post('/api/persons', (request, response) => {
 
 })
 
+//updatin a person in the DB.
 app.put("/api/persons/:id", (request, response, next) => {
     const person = {
         name: request.body.name,
         number: request.body.number
     }
-
 
     Person.findByIdAndUpdate(request.params.id, person, {new: true})
         .then(updatedPerson => {
