@@ -7,7 +7,10 @@ mongoose.connect(process.env.MONGO_URI)
         .catch(error => console.log('Error at connecting to db:', error.message))
 
 const personSchema = mongoose.Schema({
-    name: String,
+    name: {
+      type: String,
+      minLength: 3,
+    },
     number: String
 })
 

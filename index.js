@@ -62,7 +62,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
 
     if (!request.body.name) {
         return response.status(400).json({ error: 'Name is required' })
@@ -85,6 +85,7 @@ app.post('/api/persons', (request, response) => {
             
             newPerson.save()
                 .then(person => response.json(person))
+                .catch(error => next(error))
         })
         .catch(error => response.status(400).json({ error: "An error ocurred while posting a new Person", message: error.message }))
 
@@ -97,7 +98,7 @@ app.put("/api/persons/:id", (request, response, next) => {
         number: request.body.number
     }
 
-    Person.findByIdAndUpdate(request.params.id, person, {new: true})
+    Person.findByIdAndUpdate(request.params.id, person, {new: true, runValidators: true, context: 'query'})
         .then(updatedPerson => {
             response.json(updatedPerson)
         })
@@ -109,6 +110,12 @@ app.put("/api/persons/:id", (request, response, next) => {
 const errorHandler = (error, request, response, next) => {
     if(error.name === 'CastError'){
         response.status(400).send(`Error: Malformatted id`)
+    }
+
+    //created for exercise 3.19: Validation error if name < 3 characters
+    if(error.name === 'ValidationError'){
+        // console.log('Error:', error)
+        response.status(400).send(error)
     }
 
     next(error)
