@@ -91,7 +91,7 @@ app.post('/api/persons', (request, response, next) => {
 
 })
 
-//updatin a person in the DB.
+//updating a person in the DB.
 app.put("/api/persons/:id", (request, response, next) => {
     const person = {
         name: request.body.name,
